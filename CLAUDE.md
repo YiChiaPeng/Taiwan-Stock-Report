@@ -13,15 +13,13 @@ by querying the **Taiwan-Stock MCP server** (`mcp__claude_ai_Taiwan-Stock__*` to
 
 ## Repository structure
 
-- `half_hourly/<YYYY-MM-DD>/<HHMM>.md` — one market-breadth report per run, named by the run's Taipei-time
-  timestamp (24h `HHMM`, no colon). Reports are generated roughly every half hour to hour during TWSE trading
-  hours (~09:00–13:30 Asia/Taipei).
-- `half_hourly/hourly_report_<YYYY-MM-DD>_<HHMM>.md` — legacy naming used for the very first reports before
-  the `half_hourly/<date>/<time>.md` convention was adopted; do not reuse this pattern for new reports.
+- `<YYYY-MM-DD>/<HHMM>.md` — one market-breadth report per run, named by the run's Taipei-time timestamp (24h
+  `HHMM`, no colon), stored directly at repo root under its trading-date directory. Reports are generated
+  roughly every half hour to hour during TWSE trading hours (~09:00–13:30 Asia/Taipei).
 
 ## Producing a new report
 
-1. Determine the current Taipei-time date and time; the target file is `half_hourly/<YYYY-MM-DD>/<HHMM>.md`
+1. Determine the current Taipei-time date and time; the target file is `<YYYY-MM-DD>/<HHMM>.md` at repo root
    (create the date directory if it doesn't exist).
 2. Call the Taiwan-Stock MCP tools to gather market breadth data (rising/falling/unchanged counts, up/down
    ratio, top gainers/losers, volume anomalies). Prefer realtime tools (`get_realtime_*`) during trading
@@ -57,5 +55,5 @@ accuracy about failures matters as much as accuracy about data.
 - There is no code to build, lint, or test. Do not add package.json/requirements.txt/CI config unless
   explicitly asked — this repo is intentionally just Markdown reports plus git history.
 - When asked to analyze trends across reports (e.g. "how long has the connector been broken", "summarize
-  this week's market breadth"), read the relevant `half_hourly/<date>/*.md` files directly and/or scan
-  `git log` — the commit messages themselves already encode a timeline of connector health.
+  this week's market breadth"), read the relevant `<date>/*.md` files directly and/or scan `git log` — the
+  commit messages themselves already encode a timeline of connector health.
